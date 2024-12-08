@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import AI
+from AI import MiniMaxAgent
 
 
 class Board:
@@ -22,10 +22,12 @@ class Board:
         self.board[6][0] = 'O'
         
     def find_positions(self, player):
+        positions = []
         for r in range(self.size):
             for c in range (self.size):
                 if self.board[r][c] == player:
-                    return (r,c)
+                    positions.append((r,c))
+        return positions
                 
     def move_piece(self, player, start, end):
         #change the positions of pieces on the board and update the previous position with '-'
