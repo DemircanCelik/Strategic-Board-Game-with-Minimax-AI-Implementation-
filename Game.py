@@ -25,12 +25,14 @@ class GUI:
         self.update_display()
         self.root.after(1000, self.ai_move)  #ai makes the first move after a delay for better gui interaction
 
+    #update the display of the board after each move
     def update_display(self):
         for r in range(self.board.size):
             for c in range(self.board.size):
                 piece = self.board.board[r][c]
                 self.buttons[r][c].config(text=' ' if piece == '*' else piece)
-
+                
+    #handle the click event on the board
     def handle_click(self, r, c):
         if self.board.end_game_check() != 'playing':
             return
@@ -68,9 +70,10 @@ class GUI:
             except ValueError as e:
                 messagebox.showwarning("Invalid Move", str(e))
                 self.selected = None
-
+                
+    #AI makes a move
     def ai_move(self):
-        moves_needed = 2 if len(self.board.getPieces('X')) > 1 else 1
+        moves_needed = 2 if len(self.board.getPieces('X')) > 1 else 1 #can make 2 moves if it has more than 1 piece
         if moves_needed > 0:
             move = aiMove(self.board)
             if move:
@@ -87,7 +90,9 @@ class GUI:
             else:
                 if self.board.end_game_check() != 'playing':
                     self.end_game()
-
+                    
+                    
+    #check the if game ends and display the result
     def end_game(self):
         status = self.board.end_game_check()
         if status == 'p1_win':

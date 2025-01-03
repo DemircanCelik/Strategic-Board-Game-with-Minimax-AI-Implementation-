@@ -3,7 +3,7 @@ import random
 
 
 
-#classical minimax algorithm with a-b pruning
+#classical recursive minimax algorithm with a-b pruning
 def minimax(board, depth, is_maxPlayer, alpha=float('-inf'), beta=float('inf')):
     if depth == 0 or board.end_game_check() != 'playing':
         return board.evaluate(), None
@@ -33,7 +33,7 @@ def minimax(board, depth, is_maxPlayer, alpha=float('-inf'), beta=float('inf')):
                     best_move = move
                 alpha = max(alpha, score)
                 if beta <= alpha:
-                    break
+                    break#pruning
             except ValueError:
                 continue
         return maxScore, best_move
@@ -63,7 +63,7 @@ def minimax(board, depth, is_maxPlayer, alpha=float('-inf'), beta=float('inf')):
 def aiMove(board):
     #try to make the ai move with different depths to balance between speed and accuracy
     
-    depths = [3, 4, 5]
+    depths = [3,4,5]
     
     
     best_Score = float('-inf')

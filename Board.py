@@ -52,6 +52,7 @@ class Board:
             return True
         return False
     
+    #move a piece from start to end
     def move_piece(self, start, end):
         if not self.is_valid_move(start, end):
             raise ValueError('Invalid move')
@@ -189,19 +190,27 @@ class Board:
         return moves
 
     def evaluate(self):
+        #count the pieces of each player
         aiPieces = len(self.getPieces('X'))
         opponentPieces = len(self.getPieces('O'))
+        #if opponent has no pieces, AI wins and return pos infinity
+        
         if opponentPieces == 0:
             return float('inf')
+        #if AI has no pieces, AI loses and return neg infinity
         if aiPieces == 0:
             return float('-inf')
-        
+        #if move count eraches 50, game ends
+        #evakuate based on the pieces count
         if self.move_count >= 50:
+            #if pieces equal, draw
             if aiPieces == opponentPieces:
                 return 0
+            #if AI has more pieces, return high score
             elif aiPieces > opponentPieces:
                 return float('inf')
+            #otherwise opponent has more pieces then ai losing
             else:
                 return 0
-            
+            #for normal gameplay evaluation consider the difference between the pieces and possible moves that ai can do
         return aiPieces - opponentPieces + len(self.get_possible_moves('X'))
